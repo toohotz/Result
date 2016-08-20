@@ -125,7 +125,7 @@ final class ResultTests: XCTestCase {
 	}
 
 	func testRecoverWithProducesRightFailureForLeftFailureAndRightFailure() {
-		enum Error: ResultErrorType { case Left, Right }
+		enum Error: ResultErrorType { case left, right }
 
 		let left = Result<String, Error>.Failure(.Left)
 		let right = Result<String, Error>.Failure(.Right)
@@ -219,7 +219,7 @@ func attempt<T>(_ value: T, succeed: Bool, error: NSErrorPointer) -> T? {
 	}
 }
 #else
-func attempt<T>(value: T, succeed: Bool, error: NSErrorPointer) -> T? {
+func attempt<T>(_ value: T, succeed: Bool, error: NSErrorPointer) -> T? {
 	if succeed {
 		return value
 	} else {
@@ -233,14 +233,14 @@ func attempt<T>(value: T, succeed: Bool, error: NSErrorPointer) -> T? {
 
 #if swift(>=3)
 func tryIsSuccess(_ text: String?) throws -> String {
-	guard let text = text where text == "success" else {
+	guard let text = text , text == "success" else {
 		throw error
 	}
 
 	return text
 }
 #else
-func tryIsSuccess(text: String?) throws -> String {
+func tryIsSuccess(_ text: String?) throws -> String {
 	guard let text = text where text == "success" else {
 		throw error
 	}
